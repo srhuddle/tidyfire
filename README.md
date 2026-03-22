@@ -1,0 +1,89 @@
+# tidyfire
+
+`tidyfire` is a thin R client for querying hosted U.S. census-tract fire aggregate APIs.
+
+Current responsibilities:
+- authenticate with an API key
+- query the hosted aggregate API
+- return parsed JSON responses for analysis in R
+
+## Current working slice
+
+The current hosted slice supports:
+- `layer = "corrected"`
+- `years = 2021`
+- `geography_vintage = "tract20"`
+- `state_geoid = "11"` for all DC tracts
+- explicit field selection for:
+  - `corrected_total_fires_mean`
+  - `corrected_total_fires_median`
+  - `corrected_total_fires_p2_5`
+  - `corrected_total_fires_p97_5`
+  - `corrected_total_fires_zero_count`
+
+The response includes tract-level rows plus response-level build and definition metadata.
+
+## Install
+
+Development install from GitHub:
+
+```r
+install.packages("remotes")
+remotes::install_github("srhuddle/tidyfire")
+```
+
+Then load the package:
+
+```r
+library(tidyfire)
+```
+
+If you are working from a local checkout before publishing the new repo, the simplest fallback is:
+
+```r
+source("R/client.R")
+```
+
+## Minimal example
+
+```r
+library(tidyfire)
+
+client <- tidy_fire_client(
+  base_url = "https://usfa-agg.onrender.com",
+  api_key = "demo-usfa-key"
+)
+
+health <- tidy_fire_get_health(client)
+
+result <- tidy_fire_get(
+  client = client,
+  layer = "corrected",
+  years = 2021,
+  geography_vintage = "tract20",
+  state_geoid = "11",
+  fields = c(
+    "corrected_total_fires_mean",
+    "corrected_total_fires_median",
+    "corrected_total_fires_p2_5",
+    "corrected_total_fires_p97_5",
+    "corrected_total_fires_zero_count"
+  )
+)
+
+health
+result$meta
+head(result$data)
+```
+
+## Current functions
+
+- `tidy_fire_client(base_url, api_key)`
+- `tidy_fire_get(client, layer, years, geography_vintage, state_geoid = NULL, county_geoid = NULL, tract_geoids = NULL, fields)`
+- `tidy_fire_get_health(client)`
+
+## Current limitations
+
+- the function signature is intentionally broader than the currently implemented backend slice
+- the hosted API currently supports the first corrected query pattern only
+- unsupported combinations should return validation errors from the API
