@@ -42,12 +42,6 @@ Then load the package:
 library(tidyfire)
 ```
 
-If you are working from a local checkout before publishing the new repo, the simplest fallback is:
-
-```r
-source("R/client.R")
-```
-
 ## Minimal example
 
 ```r
