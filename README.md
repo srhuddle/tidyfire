@@ -47,13 +47,16 @@ library(tidyfire)
 ```r
 library(tidyfire)
 
+# Create an authenticated client for the hosted prototype API.
 client <- tidy_fire_client(
   base_url = "https://usfa-agg.onrender.com",
   api_key = "demo-usfa-key"
 )
 
+# Confirm the service is up before running a data query.
 health <- tidy_fire_get_health(client)
 
+# Query corrected 2021 tract20 aggregates for all tracts in DC.
 result <- tidy_fire_get(
   client = client,
   layer = "corrected",
@@ -69,9 +72,12 @@ result <- tidy_fire_get(
   )
 )
 
+# Pull the tract rows into a plain data frame for analysis.
+result_df <- as.data.frame(result$data)
+
 health
 result$meta
-head(result$data)
+head(result_df)
 ```
 
 ## Current functions
