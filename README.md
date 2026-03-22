@@ -7,6 +7,10 @@ Current responsibilities:
 - query the hosted aggregate API
 - return parsed JSON responses for analysis in R
 
+Current hosted prototype:
+- Base URL: `https://usfa-agg.onrender.com`
+- Demo API key: `demo-usfa-key`
+
 ## Current working slice
 
 The current hosted slice supports:
