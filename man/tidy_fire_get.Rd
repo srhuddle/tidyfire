@@ -46,15 +46,15 @@ client <- tidy_fire_client(
 tidy_fire_get(
   client = client,
   layer = "corrected",
-  years = 2021,
+  years = 2021:2024,
   geography_vintage = "tract20",
   state_geoid = "11",
   fields = c(
-    "corrected_total_fires_mean",
-    "corrected_total_fires_median",
-    "corrected_total_fires_p2_5",
-    "corrected_total_fires_p97_5",
-    "corrected_total_fires_zero_count"
+    "total_fires",
+    "total_fires_median",
+    "total_fires_ci_95_lower",
+    "total_fires_ci_95_upper",
+    "total_fires_zero_count"
   )
 )
 }

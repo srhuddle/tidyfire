@@ -14,16 +14,24 @@ Current hosted prototype:
 ## Current working slice
 
 The current hosted slice supports:
-- `layer = "corrected"`
-- `years = 2021`
+- `layer = "corrected"` for years `2021-2024`
+- `layer = "estimated"` for years `2021-2024`
+- one or more requested years per query
 - `geography_vintage = "tract20"`
 - `state_geoid = "11"` for all DC tracts
-- explicit field selection for:
+- explicit field selection for corrected:
   - `total_fires`
   - `total_fires_median`
+  - `total_fires_sd`
   - `total_fires_ci_95_lower`
   - `total_fires_ci_95_upper`
   - `total_fires_zero_count`
+- explicit field selection for estimated:
+  - `total_fires`
+  - `total_fires_sd`
+  - `total_fires_se`
+  - `total_fires_ci_95_lower`
+  - `total_fires_ci_95_upper`
 
 The response includes tract-level rows plus response-level build and definition metadata.
 
@@ -56,11 +64,11 @@ client <- tidy_fire_client(
 # Confirm the service is up before running a data query.
 health <- tidy_fire_get_health(client)
 
-# Query corrected 2021 tract20 aggregates for all tracts in DC.
+# Query corrected tract20 aggregates for all tracts in DC across 2021-2024.
 result <- tidy_fire_get(
   client = client,
   layer = "corrected",
-  years = 2021,
+  years = 2021:2024,
   geography_vintage = "tract20",
   state_geoid = "11",
   fields = c(
@@ -88,6 +96,5 @@ head(result_df)
 
 ## Current limitations
 
-- the function signature is intentionally broader than the currently implemented backend slice
-- the hosted API currently supports the first corrected query pattern only
-- unsupported combinations should return validation errors from the API
+- `raw` is not yet queryable through the hosted API
+- unsupported layer, year, or field combinations should return validation errors from the API
