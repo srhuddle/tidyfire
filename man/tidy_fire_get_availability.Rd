@@ -7,7 +7,6 @@ Perform an authenticated request to the API availability metadata endpoint.
 \usage{
 tidy_fire_get_availability(client)
 }
-}
 \arguments{
   \item{client}{A \code{"tidy_fire_client"} object created by \code{tidy_fire_client()}.}
 }

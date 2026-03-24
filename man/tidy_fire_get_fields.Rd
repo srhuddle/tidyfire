@@ -7,7 +7,6 @@ Perform an authenticated request to the API field metadata endpoint.
 \usage{
 tidy_fire_get_fields(client)
 }
-}
 \arguments{
   \item{client}{A \code{"tidy_fire_client"} object created by \code{tidy_fire_client()}.}
 }
