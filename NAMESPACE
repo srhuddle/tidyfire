@@ -1,3 +1,6 @@
 export(tidy_fire_client)
 export(tidy_fire_get)
+export(tidy_fire_get_availability)
+export(tidy_fire_get_current_builds)
+export(tidy_fire_get_fields)
 export(tidy_fire_get_health)

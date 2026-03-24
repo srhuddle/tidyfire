@@ -23,6 +23,27 @@ tidy_fire_get_health <- function(client) {
   httr2::resp_body_json(resp, simplifyVector = TRUE)
 }
 
+tidy_fire_get_fields <- function(client) {
+  resp <- .tidy_fire_request(client, "/v1/metadata/fields") |>
+    httr2::req_perform()
+
+  httr2::resp_body_json(resp, simplifyVector = TRUE)
+}
+
+tidy_fire_get_availability <- function(client) {
+  resp <- .tidy_fire_request(client, "/v1/metadata/availability") |>
+    httr2::req_perform()
+
+  httr2::resp_body_json(resp, simplifyVector = TRUE)
+}
+
+tidy_fire_get_current_builds <- function(client) {
+  resp <- .tidy_fire_request(client, "/v1/metadata/builds/current") |>
+    httr2::req_perform()
+
+  httr2::resp_body_json(resp, simplifyVector = TRUE)
+}
+
 tidy_fire_get <- function(
   client,
   layer,

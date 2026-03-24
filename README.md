@@ -5,6 +5,7 @@
 Current responsibilities:
 - authenticate with an API key
 - query the hosted aggregate API
+- retrieve API metadata for fields, availability, and current builds
 - return parsed JSON responses for analysis in R
 
 Current hosted prototype:
@@ -93,6 +94,17 @@ head(result_df)
 - `tidy_fire_client(base_url, api_key)`
 - `tidy_fire_get(client, layer, years, geography_vintage, state_geoid = NULL, county_geoid = NULL, tract_geoids = NULL, fields)`
 - `tidy_fire_get_health(client)`
+- `tidy_fire_get_fields(client)`
+- `tidy_fire_get_availability(client)`
+- `tidy_fire_get_current_builds(client)`
+
+## Metadata helpers
+
+```r
+fields <- tidy_fire_get_fields(client)
+availability <- tidy_fire_get_availability(client)
+current_builds <- tidy_fire_get_current_builds(client)
+```
 
 ## Current limitations
 
