@@ -29,7 +29,6 @@ The current hosted slice supports:
   - `total_fires`
   - `primary_fire_count`
   - `aid_fire_count`
-  - `aid_only_retained_fire_count`
 - explicit field selection for estimated:
   - `total_fires`
   - `total_fires_sd`
@@ -92,8 +91,7 @@ corrected_result <- tidy_fire_get(
   fields = c(
     "total_fires",
     "primary_fire_count",
-    "aid_fire_count",
-    "aid_only_retained_fire_count"
+    "aid_fire_count"
   )
 )
 

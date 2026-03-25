@@ -65,8 +65,7 @@ tidy_fire_get(
   fields = c(
     "total_fires",
     "primary_fire_count",
-    "aid_fire_count",
-    "aid_only_retained_fire_count"
+    "aid_fire_count"
   )
 )
 }
