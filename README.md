@@ -15,18 +15,21 @@ Current hosted prototype:
 ## Current working slice
 
 The current hosted slice supports:
+- `layer = "raw"` for years `2021-2024`
 - `layer = "corrected"` for years `2021-2024`
 - `layer = "estimated"` for years `2021-2024`
 - one or more requested years per query
 - `geography_vintage = "tract20"`
 - `state_geoid = "11"` for all DC tracts
+- explicit field selection for raw:
+  - `total_fires`
+  - `primary_fire_count`
+  - `aid_fire_count`
 - explicit field selection for corrected:
   - `total_fires`
-  - `total_fires_median`
-  - `total_fires_sd`
-  - `total_fires_ci_95_lower`
-  - `total_fires_ci_95_upper`
-  - `total_fires_zero_count`
+  - `primary_fire_count`
+  - `aid_fire_count`
+  - `aid_only_retained_fire_count`
 - explicit field selection for estimated:
   - `total_fires`
   - `total_fires_sd`
@@ -65,8 +68,22 @@ client <- tidy_fire_client(
 # Confirm the service is up before running a data query.
 health <- tidy_fire_get_health(client)
 
+# Query raw tract20 aggregates for all tracts in DC for 2024.
+raw_result <- tidy_fire_get(
+  client = client,
+  layer = "raw",
+  years = 2024,
+  geography_vintage = "tract20",
+  state_geoid = "11",
+  fields = c(
+    "total_fires",
+    "primary_fire_count",
+    "aid_fire_count"
+  )
+)
+
 # Query corrected tract20 aggregates for all tracts in DC across 2021-2024.
-result <- tidy_fire_get(
+corrected_result <- tidy_fire_get(
   client = client,
   layer = "corrected",
   years = 2021:2024,
@@ -74,19 +91,21 @@ result <- tidy_fire_get(
   state_geoid = "11",
   fields = c(
     "total_fires",
-    "total_fires_median",
-    "total_fires_ci_95_lower",
-    "total_fires_ci_95_upper",
-    "total_fires_zero_count"
+    "primary_fire_count",
+    "aid_fire_count",
+    "aid_only_retained_fire_count"
   )
 )
 
 # Pull the tract rows into a plain data frame for analysis.
-result_df <- as.data.frame(result$data)
+raw_df <- as.data.frame(raw_result$data)
+corrected_df <- as.data.frame(corrected_result$data)
 
 health
-result$meta
-head(result_df)
+raw_result$meta
+head(raw_df)
+corrected_result$meta
+head(corrected_df)
 ```
 
 ## Current functions
@@ -108,5 +127,4 @@ current_builds <- tidy_fire_get_current_builds(client)
 
 ## Current limitations
 
-- `raw` is not yet queryable through the hosted API
 - unsupported layer, year, or field combinations should return validation errors from the API
