@@ -135,6 +135,18 @@ dc_year_totals <- aggregate(
   FUN = sum
 )
 
+# Reshape to a wide year-level comparison table.
+dc_year_totals_wide <- reshape(
+  dc_year_totals,
+  idvar = "year",
+  timevar = "layer",
+  direction = "wide"
+)
+
+names(dc_year_totals_wide) <- c("Year", "Corrected", "Estimated", "Raw")
+dc_year_totals_wide <- dc_year_totals_wide[, c("Year", "Raw", "Corrected", "Estimated")]
+dc_year_totals_wide <- dc_year_totals_wide[order(dc_year_totals_wide$Year), ]
+
 health
 raw_result$meta
 head(raw_df)
@@ -142,7 +154,7 @@ corrected_result$meta
 head(corrected_df)
 estimated_result$meta
 head(estimated_df)
-dc_year_totals[order(dc_year_totals$year, dc_year_totals$layer), ]
+dc_year_totals_wide
 ```
 
 ## Current functions

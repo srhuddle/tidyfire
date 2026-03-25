@@ -77,5 +77,8 @@ tidy_fire_get(
   state_geoid = "11",
   fields = c("total_fires")
 )
+
+# Aggregate tract rows into a year-level table with columns:
+# Year, Raw, Corrected, Estimated.
 }
 }
