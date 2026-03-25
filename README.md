@@ -67,11 +67,11 @@ client <- tidy_fire_client(
 # Confirm the service is up before running a data query.
 health <- tidy_fire_get_health(client)
 
-# Query raw tract20 aggregates for all tracts in DC for 2024.
+# Query raw tract20 aggregates for all tracts in DC across 2021-2024.
 raw_result <- tidy_fire_get(
   client = client,
   layer = "raw",
-  years = 2024,
+  years = 2021:2024,
   geography_vintage = "tract20",
   state_geoid = "11",
   fields = c(
@@ -95,15 +95,54 @@ corrected_result <- tidy_fire_get(
   )
 )
 
-# Pull the tract rows into a plain data frame for analysis.
+# Query estimated tract20 aggregates for all tracts in DC across 2021-2024.
+estimated_result <- tidy_fire_get(
+  client = client,
+  layer = "estimated",
+  years = 2021:2024,
+  geography_vintage = "tract20",
+  state_geoid = "11",
+  fields = c("total_fires")
+)
+
+# Pull the tract rows into plain data frames for analysis.
 raw_df <- as.data.frame(raw_result$data)
 corrected_df <- as.data.frame(corrected_result$data)
+estimated_df <- as.data.frame(estimated_result$data)
+
+# Sum total fires across tracts to compare DC-wide yearly totals by layer.
+dc_year_totals <- rbind(
+  data.frame(
+    year = raw_df$year,
+    layer = "raw",
+    total_fires = raw_df$total_fires
+  ),
+  data.frame(
+    year = corrected_df$year,
+    layer = "corrected",
+    total_fires = corrected_df$total_fires
+  ),
+  data.frame(
+    year = estimated_df$year,
+    layer = "estimated",
+    total_fires = estimated_df$total_fires
+  )
+)
+
+dc_year_totals <- aggregate(
+  total_fires ~ year + layer,
+  data = dc_year_totals,
+  FUN = sum
+)
 
 health
 raw_result$meta
 head(raw_df)
 corrected_result$meta
 head(corrected_df)
+estimated_result$meta
+head(estimated_df)
+dc_year_totals[order(dc_year_totals$year, dc_year_totals$layer), ]
 ```
 
 ## Current functions

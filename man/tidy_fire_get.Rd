@@ -46,7 +46,7 @@ client <- tidy_fire_client(
 tidy_fire_get(
   client = client,
   layer = "raw",
-  years = 2024,
+  years = 2021:2024,
   geography_vintage = "tract20",
   state_geoid = "11",
   fields = c(
@@ -67,6 +67,15 @@ tidy_fire_get(
     "primary_fire_count",
     "aid_fire_count"
   )
+)
+
+tidy_fire_get(
+  client = client,
+  layer = "estimated",
+  years = 2021:2024,
+  geography_vintage = "tract20",
+  state_geoid = "11",
+  fields = c("total_fires")
 )
 }
 }
