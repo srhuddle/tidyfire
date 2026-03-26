@@ -176,3 +176,43 @@ tidy_fire_get <- function(
 
   httr2::resp_body_json(resp, simplifyVector = TRUE)
 }
+
+tidy_fire_get_summary <- function(
+  client,
+  layer,
+  years,
+  geography_vintage,
+  summary_level,
+  state_geoid = NULL,
+  county_geoid = NULL,
+  fields
+) {
+  stopifnot(is.character(layer), length(layer) == 1, nzchar(layer))
+  stopifnot(length(years) >= 1)
+  stopifnot(is.character(geography_vintage), length(geography_vintage) == 1, nzchar(geography_vintage))
+  stopifnot(is.character(summary_level), length(summary_level) == 1, nzchar(summary_level))
+  stopifnot(length(fields) >= 1)
+
+  body <- list(
+    layer = layer,
+    years = as.list(years),
+    geography = list(
+      geographyVintage = geography_vintage
+    ),
+    summaryLevel = summary_level,
+    fields = as.list(fields)
+  )
+
+  if (!is.null(state_geoid)) {
+    body$geography$stateGEOID <- state_geoid
+  }
+  if (!is.null(county_geoid)) {
+    body$geography$countyGEOID <- county_geoid
+  }
+
+  resp <- .tidy_fire_request(client, "/v1/aggregates/query_summary") |>
+    httr2::req_body_json(body, auto_unbox = TRUE) |>
+    .tidy_fire_perform()
+
+  httr2::resp_body_json(resp, simplifyVector = TRUE)
+}

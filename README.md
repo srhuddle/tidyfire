@@ -200,12 +200,27 @@ national_residential_totals <- data.frame(
 )
 
 national_residential_totals
+
+national_summary <- tidy_fire_get_summary(
+  client = client,
+  layer = "raw",
+  years = 2021:2024,
+  geography_vintage = "tract20",
+  summary_level = "national",
+  fields = c(
+    "residential_fire_count",
+    "residential_fire_death_count"
+  )
+)
+
+as.data.frame(national_summary$data)
 ```
 
 ## Current functions
 
 - `tidy_fire_client(base_url, api_key)`
 - `tidy_fire_get(client, layer, years, geography_vintage, state_geoid = NULL, county_geoid = NULL, tract_geoids = NULL, fields)`
+- `tidy_fire_get_summary(client, layer, years, geography_vintage, summary_level, state_geoid = NULL, county_geoid = NULL, fields)`
 - `tidy_fire_get_health(client)`
 - `tidy_fire_get_fields(client)`
 - `tidy_fire_get_availability(client)`

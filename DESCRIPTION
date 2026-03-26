@@ -1,7 +1,7 @@
 Package: tidyfire
 Type: Package
 Title: Thin Client for Census-Tract Fire Aggregates
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person("Scott", "Huddle", email = "scott@pgpublicservices.com", role = c("aut", "cre"))
 Author: Scott Huddle [aut, cre]
 Maintainer: Scott Huddle <scott@pgpublicservices.com>
