@@ -29,16 +29,32 @@ The current hosted slice supports:
   - `total_fires`
   - `primary_fire_count`
   - `aid_fire_count`
+  - `residential_fire_count`
+  - `primary_residential_fire_count`
+  - `aid_residential_fire_count`
+  - `residential_fire_death_count`
+  - `primary_residential_fire_death_count`
+  - `aid_residential_fire_death_count`
 - explicit field selection for corrected:
   - `total_fires`
   - `primary_fire_count`
   - `aid_fire_count`
+  - `residential_fire_count`
+  - `primary_residential_fire_count`
+  - `aid_residential_fire_count`
+  - `residential_fire_death_count`
+  - `primary_residential_fire_death_count`
+  - `aid_residential_fire_death_count`
 - explicit field selection for estimated:
   - `total_fires`
   - `total_fires_sd`
   - `total_fires_se`
   - `total_fires_ci_95_lower`
   - `total_fires_ci_95_upper`
+- server-side summary queries via `tidy_fire_get_summary()` for:
+  - `national`
+  - `state`
+  - `county`
 
 The response includes tract-level rows plus response-level build and definition metadata.
 
