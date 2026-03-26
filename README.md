@@ -210,6 +210,35 @@ nfpa_reference <- tidy_fire_get_reference(
 )
 
 as.data.frame(nfpa_reference$data)
+
+# Compare NFPA national fire estimates to USFA estimated national totals.
+nfpa <- tidy_fire_get_reference(
+  client = client,
+  metric_name = "total_fires",
+  years = 2021:2023,
+  series_names = "all_fires",
+  source_systems = "NFPA"
+)
+
+usfa <- tidy_fire_get_summary(
+  client = client,
+  layer = "estimated",
+  years = 2021:2023,
+  geography_vintage = "tract20",
+  summary_level = "national",
+  fields = "total_fires"
+)
+
+nfpa_df <- as.data.frame(nfpa$data)[, c("year", "value")]
+names(nfpa_df) <- c("Year", "National Estimate (NFPA)")
+
+usfa_df <- as.data.frame(usfa$data)[, c("year", "total_fires")]
+names(usfa_df) <- c("Year", "National Estimate (USFA)")
+
+national_estimate_comparison <- merge(nfpa_df, usfa_df, by = "Year", all = TRUE)
+national_estimate_comparison <- national_estimate_comparison[order(national_estimate_comparison$Year), ]
+
+national_estimate_comparison
 ```
 
 ## Current functions
