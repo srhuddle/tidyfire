@@ -177,28 +177,6 @@ tidy_fire_get_tract <- function(
   httr2::resp_body_json(resp, simplifyVector = TRUE)
 }
 
-tidy_fire_get <- function(
-  client,
-  layer,
-  years,
-  geography_vintage,
-  state_geoid = NULL,
-  county_geoid = NULL,
-  tract_geoids = NULL,
-  fields
-) {
-  tidy_fire_get_tract(
-    client = client,
-    layer = layer,
-    years = years,
-    geography_vintage = geography_vintage,
-    state_geoid = state_geoid,
-    county_geoid = county_geoid,
-    tract_geoids = tract_geoids,
-    fields = fields
-  )
-}
-
 tidy_fire_get_summary <- function(
   client,
   layer,

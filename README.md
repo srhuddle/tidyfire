@@ -218,7 +218,6 @@ as.data.frame(nfpa_reference$data)
 - `tidy_fire_get_tract(client, layer, years, geography_vintage, state_geoid = NULL, county_geoid = NULL, tract_geoids = NULL, fields)`
 - `tidy_fire_get_summary(client, layer, years, geography_vintage, summary_level, state_geoid = NULL, county_geoid = NULL, fields)`
 - `tidy_fire_get_reference(client, metric_name, years, series_names = NULL, source_systems = NULL)`
-- `tidy_fire_get(client, ...)` as a backward-compatible alias for `tidy_fire_get_tract()`
 - `tidy_fire_get_health(client)`
 - `tidy_fire_get_fields(client)`
 - `tidy_fire_get_availability(client)`

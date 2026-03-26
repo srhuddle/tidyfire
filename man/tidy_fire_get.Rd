@@ -1,23 +1,11 @@
-\name{tidy_fire_get}
+\name{tidy_fire_get_tract}
 \alias{tidy_fire_get_tract}
-\alias{tidy_fire_get}
 \title{Query Tract Data}
 \description{
 Submit a tract query to the hosted API.
 }
 \usage{
 tidy_fire_get_tract(
-  client,
-  layer,
-  years,
-  geography_vintage,
-  state_geoid = NULL,
-  county_geoid = NULL,
-  tract_geoids = NULL,
-  fields
-)
-
-tidy_fire_get(
   client,
   layer,
   years,

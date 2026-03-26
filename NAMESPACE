@@ -1,5 +1,4 @@
 export(tidy_fire_client)
-export(tidy_fire_get)
 export(tidy_fire_get_tract)
 export(tidy_fire_get_summary)
 export(tidy_fire_get_reference)
