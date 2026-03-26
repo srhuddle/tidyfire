@@ -1,8 +1,8 @@
 \name{tidy_fire_get_summary}
 \alias{tidy_fire_get_summary}
-\title{Query Summary Aggregates}
+\title{Query Summary Data}
 \description{
-Submit a summary aggregate query to the hosted API.
+Submit a summary query to the hosted API.
 }
 \usage{
 tidy_fire_get_summary(

@@ -1,10 +1,22 @@
 \name{tidy_fire_get}
+\alias{tidy_fire_get_tract}
 \alias{tidy_fire_get}
-\title{Query Aggregate Data}
+\title{Query Tract Data}
 \description{
-Submit an aggregate query to the hosted API.
+Submit a tract query to the hosted API.
 }
 \usage{
+tidy_fire_get_tract(
+  client,
+  layer,
+  years,
+  geography_vintage,
+  state_geoid = NULL,
+  county_geoid = NULL,
+  tract_geoids = NULL,
+  fields
+)
+
 tidy_fire_get(
   client,
   layer,
@@ -43,7 +55,7 @@ client <- tidy_fire_client(
   api_key = "demo-usfa-key"
 )
 
-tidy_fire_get(
+tidy_fire_get_tract(
   client = client,
   layer = "raw",
   years = 2021:2024,
@@ -56,7 +68,7 @@ tidy_fire_get(
   )
 )
 
-tidy_fire_get(
+tidy_fire_get_tract(
   client = client,
   layer = "corrected",
   years = 2021:2024,
@@ -69,7 +81,7 @@ tidy_fire_get(
   )
 )
 
-tidy_fire_get(
+tidy_fire_get_tract(
   client = client,
   layer = "estimated",
   years = 2021:2024,
@@ -78,7 +90,7 @@ tidy_fire_get(
   fields = c("total_fires")
 )
 
-# Aggregate tract rows into a year-level table with columns:
+# Roll tract rows up into a year-level table with columns:
 # Year, Raw, Corrected, Estimated.
 
 national_summary <- tidy_fire_get_summary(

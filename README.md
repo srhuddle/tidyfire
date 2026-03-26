@@ -1,10 +1,10 @@
 # tidyfire
 
-`tidyfire` is a thin R client for querying hosted U.S. census-tract fire aggregate APIs.
+`tidyfire` is a thin R client for querying hosted U.S. census-tract fire data APIs.
 
 Current responsibilities:
 - authenticate with an API key
-- query the hosted aggregate API
+- query hosted tract, summary, and reference data products
 - retrieve API metadata for fields, availability, and current builds
 - return parsed JSON responses for analysis in R
 
@@ -55,8 +55,14 @@ The current hosted slice supports:
   - `national`
   - `state`
   - `county`
+- reference-series queries via `tidy_fire_get_reference()` for national benchmark data, including:
+  - `total_fires`
+  - `total_fire_deaths`
+  - `total_fire_injuries`
+  - `direct_property_damage_reported`
+  - `direct_property_damage_2023_dollars`
 
-The response includes tract-level rows plus response-level build and definition metadata.
+The response includes tract rows plus response-level build and definition metadata.
 
 ## Install
 
@@ -92,8 +98,8 @@ client <- tidy_fire_client(
 # Confirm the service is up before running a data query.
 health <- tidy_fire_get_health(client)
 
-# Query raw tract20 aggregates for all tracts in DC across 2021-2024.
-raw_result <- tidy_fire_get(
+# Query raw tract20 rows for all tracts in DC across 2021-2024.
+raw_result <- tidy_fire_get_tract(
   client = client,
   layer = "raw",
   years = 2021:2024,
@@ -106,8 +112,8 @@ raw_result <- tidy_fire_get(
   )
 )
 
-# Query corrected tract20 aggregates for all tracts in DC across 2021-2024.
-corrected_result <- tidy_fire_get(
+# Query corrected tract20 rows for all tracts in DC across 2021-2024.
+corrected_result <- tidy_fire_get_tract(
   client = client,
   layer = "corrected",
   years = 2021:2024,
@@ -120,8 +126,8 @@ corrected_result <- tidy_fire_get(
   )
 )
 
-# Query estimated tract20 aggregates for all tracts in DC across 2021-2024.
-estimated_result <- tidy_fire_get(
+# Query estimated tract20 rows for all tracts in DC across 2021-2024.
+estimated_result <- tidy_fire_get_tract(
   client = client,
   layer = "estimated",
   years = 2021:2024,
@@ -194,13 +200,25 @@ national_summary <- tidy_fire_get_summary(
 )
 
 as.data.frame(national_summary$data)
+
+nfpa_reference <- tidy_fire_get_reference(
+  client = client,
+  metric_name = "total_fires",
+  years = 2021:2023,
+  series_names = "all_fires",
+  source_systems = "NFPA"
+)
+
+as.data.frame(nfpa_reference$data)
 ```
 
 ## Current functions
 
 - `tidy_fire_client(base_url, api_key)`
-- `tidy_fire_get(client, layer, years, geography_vintage, state_geoid = NULL, county_geoid = NULL, tract_geoids = NULL, fields)`
+- `tidy_fire_get_tract(client, layer, years, geography_vintage, state_geoid = NULL, county_geoid = NULL, tract_geoids = NULL, fields)`
 - `tidy_fire_get_summary(client, layer, years, geography_vintage, summary_level, state_geoid = NULL, county_geoid = NULL, fields)`
+- `tidy_fire_get_reference(client, metric_name, years, series_names = NULL, source_systems = NULL)`
+- `tidy_fire_get(client, ...)` as a backward-compatible alias for `tidy_fire_get_tract()`
 - `tidy_fire_get_health(client)`
 - `tidy_fire_get_fields(client)`
 - `tidy_fire_get_availability(client)`

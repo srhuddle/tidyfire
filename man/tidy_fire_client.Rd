@@ -2,7 +2,7 @@
 \alias{tidy_fire_client}
 \title{Create a Tidyfire API Client}
 \description{
-Create a client object for authenticated requests to a hosted fire aggregate API.
+Create a client object for authenticated requests to a hosted fire data API.
 }
 \usage{
 tidy_fire_client(base_url, api_key)

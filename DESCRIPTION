@@ -1,12 +1,12 @@
 Package: tidyfire
 Type: Package
-Title: Thin Client for Census-Tract Fire Aggregates
-Version: 0.1.2
+Title: Thin Client for Census-Tract Fire Data
+Version: 0.1.3
 Authors@R: person("Scott", "Huddle", email = "scott@pgpublicservices.com", role = c("aut", "cre"))
 Author: Scott Huddle [aut, cre]
 Maintainer: Scott Huddle <scott@pgpublicservices.com>
 Description: Minimal prototype R client for querying hosted U.S. census-tract
-    fire aggregate APIs.
+    fire data APIs.
 License: MIT + file LICENSE
 Depends:
     R (>= 4.1.0)

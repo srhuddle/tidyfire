@@ -136,7 +136,7 @@ tidy_fire_get_current_builds <- function(client) {
   httr2::resp_body_json(resp, simplifyVector = TRUE)
 }
 
-tidy_fire_get <- function(
+tidy_fire_get_tract <- function(
   client,
   layer,
   years,
@@ -177,6 +177,28 @@ tidy_fire_get <- function(
   httr2::resp_body_json(resp, simplifyVector = TRUE)
 }
 
+tidy_fire_get <- function(
+  client,
+  layer,
+  years,
+  geography_vintage,
+  state_geoid = NULL,
+  county_geoid = NULL,
+  tract_geoids = NULL,
+  fields
+) {
+  tidy_fire_get_tract(
+    client = client,
+    layer = layer,
+    years = years,
+    geography_vintage = geography_vintage,
+    state_geoid = state_geoid,
+    county_geoid = county_geoid,
+    tract_geoids = tract_geoids,
+    fields = fields
+  )
+}
+
 tidy_fire_get_summary <- function(
   client,
   layer,
@@ -211,6 +233,38 @@ tidy_fire_get_summary <- function(
   }
 
   resp <- .tidy_fire_request(client, "/v1/aggregates/query_summary") |>
+    httr2::req_body_json(body, auto_unbox = TRUE) |>
+    .tidy_fire_perform()
+
+  httr2::resp_body_json(resp, simplifyVector = TRUE)
+}
+
+tidy_fire_get_reference <- function(
+  client,
+  metric_name,
+  years,
+  series_names = NULL,
+  source_systems = NULL
+) {
+  stopifnot(is.character(metric_name), length(metric_name) == 1, nzchar(metric_name))
+  stopifnot(length(years) >= 1)
+
+  body <- list(
+    metricName = metric_name,
+    years = as.list(years)
+  )
+
+  if (!is.null(series_names)) {
+    stopifnot(length(series_names) >= 1)
+    body$seriesNames <- as.list(series_names)
+  }
+
+  if (!is.null(source_systems)) {
+    stopifnot(length(source_systems) >= 1)
+    body$sourceSystems <- as.list(source_systems)
+  }
+
+  resp <- .tidy_fire_request(client, "/v1/reference_series/query") |>
     httr2::req_body_json(body, auto_unbox = TRUE) |>
     .tidy_fire_perform()
 
