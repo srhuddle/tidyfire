@@ -20,7 +20,11 @@ The current hosted slice supports:
 - `layer = "estimated"` for years `2021-2024`
 - one or more requested years per query
 - `geography_vintage = "tract20"`
-- `state_geoid = "11"` for all DC tracts
+- optional selectors for:
+  - `state_geoid`
+  - `county_geoid`
+  - `tract_geoids`
+- hosted data currently covers the published national NFIRS tract slice for `2021-2024`
 - explicit field selection for raw:
   - `total_fires`
   - `primary_fire_count`
