@@ -71,7 +71,6 @@ When testing a newly installed GitHub version, the most reliable path is:
 
 1. reinstall the package
 2. restart R
-3. load `tidyfire` again
 
 Then load the package:
 
